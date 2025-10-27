@@ -3,7 +3,7 @@ from src.MLproject.exception import CustomException
 from src.MLproject.components.data_ingestion import DataIngestion
 from src.MLproject.components.data_ingestion import DataIngestionConfig
 from src.MLproject.components.data_transformation import DataTransformationConfig,DataTransformation
-
+from src.MLproject.components.model_tranier import ModelTrainerConfig, ModelTrainer
 
 import sys
 
@@ -19,19 +19,14 @@ if __name__=="__main__":
         
         #data_transformation_config = DataTransformationConfig()
         data_transformation = DataTransformation()
-        data_transformation.initiate_data_transformation(train_data_path, test_data_path)
+        train_arr, test_arr,_ = data_transformation.initiate_data_transformation(train_data_path, test_data_path)
+        
+        # Model Training
+        model_trainer = ModelTrainer()
+        print(model_trainer.initiate_model_trainer(train_arr, test_arr))
+        
         
     except Exception as e:
         logging.info("Custom Exception")
         raise CustomException(e,sys)
 
-
-
-'''try:    
-    x = -1
-
-    if x < 0:
-        raise ValueError("Negative value found") 
-except Exception as e:
-    logging.info("custom exceptiom")
-    raise CustomException(e,sys)'''
